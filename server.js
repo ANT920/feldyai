@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const axios = require('axios');
@@ -9,10 +10,11 @@ const port = process.env.PORT || 3000;
 const upload = multer({ dest: 'uploads/' });
 
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public'))); // Добавлено для обслуживания статических файлов
 
 const CLIENT_ID = '1106953570651';
 const CLIENT_SECRET = 'pat_WMUekWBmUTfBOqLGLi5ofPpl1MRtsq3WYHaknyDQtYXkQQYmesdZaUE759PEETOu'; // Ваш секрет клиента
-const REDIRECT_URI = 'https://ваше-приложение.onrender.com/auth/callback';
+const REDIRECT_URI = 'https://feldyai.onrender.com/auth/callback';
 const AUTH_URL = 'https://api.coze.example.com/oauth/token';
 const COZE_API_URL = 'https://api.coze.example.com/v1/messages';
 
@@ -26,6 +28,10 @@ async function getToken() {
 
     return response.data.access_token;
 }
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Обслуживание вашего HTML-файла
+});
 
 app.post('/send-message', async (req, res) => {
     const message = req.body.message;
@@ -79,3 +85,4 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
 app.listen(port, () => {
     console.log(`Сервер запущен на порту ${port}`);
 });
+
