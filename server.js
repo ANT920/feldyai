@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const axios = require('axios');
@@ -9,8 +10,13 @@ const port = process.env.PORT || 3000;
 const upload = multer({ dest: 'uploads/' });
 
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public'))); // Добавлено для обслуживания статических файлов
 
 const CLIENT_SECRET = 'pat_WMUekWBmUTfBOqLGLi5ofPpl1MRtsq3WYHaknyDQtYXkQQYmesdZaUE759PEETOu';
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Обслуживание вашего HTML-файла
+});
 
 app.post('/send-message', async (req, res) => {
     const message = req.body.message;
@@ -20,15 +26,8 @@ app.post('/send-message', async (req, res) => {
     }
 
     try {
-        const response = await axios.post(COZE_API_URL, {
-            input: message
-        }, {
-            headers: {
-                'Authorization': `Bearer ${CLIENT_SECRET}`
-            }
-        });
-
-        res.send({ reply: response.data.output });
+        // Пример эмуляции ответа API
+        res.send({ reply: `Ваше сообщение было получено: "${message}"` });
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: 'Ошибка при отправке сообщения' });
@@ -43,16 +42,8 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
     }
 
     try {
-        const response = await axios.post(COZE_API_URL, {
-            input: file.path,
-            type: 'image'
-        }, {
-            headers: {
-                'Authorization': `Bearer ${CLIENT_SECRET}`
-            }
-        });
-
-        res.send({ reply: response.data.output });
+        // Пример эмуляции ответа API
+        res.send({ reply: `Файл "${file.originalname}" был успешно загружен.` });
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: 'Ошибка при отправке изображения' });
