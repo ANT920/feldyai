@@ -4,3 +4,6 @@ pandas
 flask
 gunicorn
 Cython==0.29.15
+spacy==2.1.9
+cymem==2.0.2
+preshed==2.0.1
