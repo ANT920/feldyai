@@ -1,25 +1,16 @@
+from flask import Flask
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
 
-# Создание нового экземпляра ChatBot
+app = Flask(__name__)
+
 bot = ChatBot('FeldyAI')
-
-# Устанавливаем тренера для нашего бота
 trainer = ChatterBotCorpusTrainer(bot)
-
-# Тренировка бота на стандартных данных
 trainer.train("chatterbot.corpus.russian")
 
-# Функция для общения с ботом
-def chat_with_bot():
-    print("Привет! Я FeldyAI 2.0. Как я могу помочь вам сегодня?")
-    while True:
-        try:
-            user_input = input()
-            bot_response = bot.get_response(user_input)
-            print(f"FeldyAI 2.0: {bot_response}")
-        except (KeyboardInterrupt, EOFError, SystemExit):
-            break
+@app.route('/')
+def home():
+    return "Привет! Я FeldyAI 2.0. Как я могу помочь вам сегодня?"
 
-# Начало общения с ботом
-chat_with_bot()
+if __name__ == "__main__":
+    app.run()
