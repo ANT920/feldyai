@@ -1,1 +1,4 @@
-ChatterBot
+ChatterBot==1.0.5
+pip
+setuptools
+wheel
