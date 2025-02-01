@@ -3,4 +3,4 @@ numpy
 pandas
 flask
 gunicorn
-Cython==0.29.21
+Cython==0.29.15
