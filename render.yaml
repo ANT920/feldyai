@@ -3,5 +3,7 @@ services:
     name: feldy-ai
     env: python
     plan: free
-    buildCommand: pip install -r requirements-build.txt && pip install -r requirements.txt
+    buildCommand: |
+      pip install -r requirements.txt
+      pip install spacy==2.2.4 cymem==2.0.2 preshed==2.0.1
     startCommand: gunicorn app:app
