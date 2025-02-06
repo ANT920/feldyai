@@ -1,12 +1,12 @@
 pip==24.0
 setuptools==75.8.0
-wheel==0.33.0
+wheel==0.33.6
 Cython==0.29.15
 ChatterBot==1.0.5
 numpy
 pandas
 flask
 gunicorn
-spacy==2.2.0
+spacy==2.2.4
 cymem==2.0.2
 preshed==2.0.1
